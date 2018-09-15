@@ -16,6 +16,7 @@ print(weather)
 # Добавьте в словарь элемент date со значением '27.05.2017'
 # Выведите на экран длину словаря
 
+print('country' in weather)
 print(weather.get('country', 'Россия'))
 weather['date'] = '27.05.2017'
 print(weather)
