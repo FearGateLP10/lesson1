@@ -24,7 +24,8 @@ def talk_to_me(bot, update):
 
 
 def main():
-    mybot = Updater("685862583:AAGQMkb5EJrk1dV7JHepFTGjT4Dkd2o6MOs", request_kwargs=PROXY)
+    token = None
+    mybot = Updater(token, request_kwargs=PROXY)
 
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user))
