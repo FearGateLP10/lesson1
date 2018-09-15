@@ -1,11 +1,9 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
+import settings
 
 
-PROXY = {'proxy_url': 'socks5://t1.learn.python.ru:1080',
-    'urllib3_proxy_kwargs': {'username': 'learn', 'password': 'python'}}
-
-logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
                     filename='bot.log'
                     )
@@ -13,19 +11,20 @@ logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
 
 def greet_user(bot, update):
     text = 'Вызван /start'
-    print(text)
+    logging.info(text)
     update.message.reply_text(text)
 
 
 def talk_to_me(bot, update):
-    user_text = update.message.text 
-    print(user_text)
+    user_text = 'Привет, {}! Ты написал {}'.format(update.message.chat.first_name, update.message.text)
+    logging.info('User: {}, Chat id: {}, message: {}'.format(update.message.chat.username, 
+                                                            update.message.chat.id, update.message.text))
     update.message.reply_text(user_text)
 
 
 def main():
-    token = None
-    mybot = Updater(token, request_kwargs=PROXY)
+    mybot = Updater(settings.API_KEY, request_kwargs=settings.PROXY)
+    logging.info('Bot запущен')
 
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user))
